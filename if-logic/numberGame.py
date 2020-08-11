@@ -8,24 +8,17 @@
 """
 from random import randint
 
-# a bunch of functions
-def add(target, num):
-    return target + num
-
-def minus(target, num):
-    return target - num
-
-def multiply(target, num):
-    return target * num
-
-def divide(target, num):
-    return target / num
-
+# a function to do nothing
 def nothing(target, num):
     return target
 
 # grouping the functions together in a dict to make it easier to call
-operations = {"add":add, "minus":minus, "multiply":multiply, "nothing":nothing}
+operations = {
+        "add" : (lambda x, y : x + y),
+        "minus" : (lambda x, y: x - y),
+        "multiply" : (lambda x, y: x * y),
+        "nothing" : nothing
+        }
 
 # function to get number from a string value. returns 0 if value passed was not a float
 def getNum(value):
