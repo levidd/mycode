@@ -56,11 +56,7 @@ def anotherRound():
     else:
         print("Please type either yes, y, no, or n")
         return anotherRound()
-
-print("Welcome to the Numbers game!")
-print("To play the game, you need to get to the target number by using the numbers given to you.")
-print("You can add, multiply, or subtract. e.g. 'add four' or 'multiply 100'")
-
+    
 # function to get the action the user wants to do
 def getAction():
     while True:
@@ -90,6 +86,12 @@ def doAction(action, target, items):
     else:
         print(f"That wasn't a supported operation. Try one of these: {list(operations.keys())[0:-1]}") 
         return operations.get("nothing")(target, num)
+    
+    
+""" Do the game """    
+print("Welcome to the Numbers game!")
+print("To play the game, you need to get to the target number by using the numbers given to you.")
+print("You can add, multiply, or subtract. e.g. 'add four' or 'multiply 100'")
 
 doRound = True
 
