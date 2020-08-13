@@ -1,0 +1,12 @@
+Line : Phrase                                 : Yes, no
+0    : Does the damn thing work?              : 1, 2
+1    : DON'T FUCK WITH IT                     :   
+2    : DID YOU FUCK WITH IT                   : 3, 7
+3    : YOU DUMB SHIT			      : 4
+4    : DOES ANYONE KNOW			      : 6, 5
+5    : HIDE IT                    	      : 10
+6    : YOU POOR BASTARD			      : 8
+7    : WILL YOU CATCH HELL	   	      : 6, 9
+8    : CAN YOU BLAM A PRIVATE?		      : 10, 6
+9   : SHIT-CAN IT			      : 10
+10   : NO PROBLEM			      :
