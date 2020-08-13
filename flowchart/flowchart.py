@@ -44,12 +44,12 @@ class FlowChartNode:
             return 0
 
 def convertToInt(item):
-    try:
+    if len(item) > 0:
         return int(item)
-    except ValueError:
-        return []
+    else:
+        return None
 
-nodeFile = "flowChartNodes.txt"
+nodeFile = "army_problem_solving.txt"
 flowChart = []
 
 # load the flowchart nodes

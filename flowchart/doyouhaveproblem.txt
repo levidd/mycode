@@ -1,0 +1,4 @@
+Line : Phrase                                   : Yes, no
+0    : Do you have a problem?                   : 1, 2
+1    : Can you do something about it?           : 2, 2
+2    : Then don't worry                         :

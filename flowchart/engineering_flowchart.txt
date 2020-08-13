@@ -1,0 +1,7 @@
+Line : Phrase                                   : Yes, no
+0    : DOES IT MOVE?                            : 2, 1
+1    : SHOULD IT?                               : 4, 3
+2    : SHOULD IT?                               : 3, 5
+3     : NO PROBLEM                              :
+4    : WD-40                                    :
+5    : DUCT-TAPE FTW                            :
