@@ -13,7 +13,7 @@ def getDate():
         try:
             print("Date format in dd/mm/yy")
             returning = datetime.datetime.strptime(input(), "%d/%m/%y")
-        except:
+        except ValueError:
             print("Invalide date, try again")
     return returning
 
