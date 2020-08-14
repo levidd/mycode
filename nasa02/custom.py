@@ -33,7 +33,7 @@ def findClosestNeo(neos):
             returning = closest_neo
             minDistance = float(getDistance(returning))
 
-    return returning
+    return returning.get("links").get("self")
 
 def areHazardous(neos):
     returning = []
