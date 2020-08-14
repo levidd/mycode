@@ -38,7 +38,7 @@ def findClosestNeo(neos):
 def areHazardous(neos):
     returning = []
     for date in neos:
-        returning.extend(list(filter(lambda x: x.get("is_potentially_hazardous_asteroid"), neos.get(date))))
+        returning.extend(list(map(lambda t: t.get("links").get("self"), filter(lambda x: x.get("is_potentially_hazardous_asteroid"), neos.get(date)))))
     return returning
 
 ## define the main function
