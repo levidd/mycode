@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 
 import requests  ## 3rd party URL lookup
-import datetime
+import datetime # for date for use in API call
 import sys
 from pprint import pprint
+from lazy_streams import stream  # like java8 streams
 
 
 def getDate():
@@ -21,25 +22,45 @@ def get_moon_lengths(missdistance):
     moon_length = 238900.0
     return missdistance / moon_length
 
+
 def getDistance(neo_obj):
     return neo_obj.get("close_approach_data")[0].get("miss_distance").get("miles")
 
+
 def findClosestNeo(neos):
-    minDistance = sys.maxsize
-    returning = None
-    for date in neos:
-        closest_neo = min(neos.get(date), key=lambda x: getDistance(x))
-        if minDistance > float(getDistance(closest_neo)):
-            returning = closest_neo
-            minDistance = float(getDistance(returning))
+    # with lazy-streams
+    returning = stream(list(neos.values())) \
+        .flatten() \
+        .min(key=getDistance)
+
+    # other pythonic way
+    # minDistance = sys.maxsize
+    # returning = None
+    # for date in neos:
+    #     closest_neo = min(neos.get(date), key=lambda x: getDistance(x))
+    #     if minDistance > float(getDistance(closest_neo)):
+    #         returning = closest_neo
+    #         minDistance = float(getDistance(returning))
 
     return returning.get("links").get("self")
 
+
 def areHazardous(neos):
     returning = []
-    for date in neos:
-        returning.extend(list(map(lambda t: t.get("links").get("self"), filter(lambda x: x.get("is_potentially_hazardous_asteroid"), neos.get(date)))))
+
+    # with lazy streams
+    returning = stream(list(neos.values())) \
+        .flatten() \
+        .filter(lambda x: x.get("is_potentially_hazardous_asteroid")) \
+        .map(lambda x: x.get("links").get("self")) \
+        .to_list()
+
+    # more pythonic way
+    # for date in neos:
+    #     returning.extend(map(lambda t: t.get("links").get("self"), filter(lambda x: x.get("is_potentially_hazardous_asteroid"), neos.get(date))))
+
     return returning
+
 
 ## define the main function
 def main():
@@ -60,7 +81,7 @@ def main():
     enddate = '&end_date=' + str(end)  ## create a mechanism to utilize enddate
     mykey = '&api_key=tIclf3RKV3YHj71xOlyp1rQr9Hl85TSpJtuoVg9c'  ## replace this with our API key
 
-    neourl = neourl + startdate + mykey
+    neourl = neourl + startdate + enddate + mykey
 
     neojson = (requests.get(neourl)).json()
 
