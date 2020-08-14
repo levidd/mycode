@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 
-import requests ## 3rd party URL lookup
+import requests  ## 3rd party URL lookup
 import datetime
+import sys
+from pprint import pprint
+
 
 def getDate():
     returning = None
@@ -13,13 +16,34 @@ def getDate():
             print("Invalide date, try again")
     return returning
 
+
 def get_moon_lengths(missdistance):
     moon_length = 238900.0
     return missdistance / moon_length
 
+def getDistance(neo_obj):
+    return neo_obj.get("close_approach_data")[0].get("miss_distance").get("miles")
+
+def findClosestNeo(neos):
+    minDistance = sys.maxsize
+    returning = None
+    for date in neos:
+        closest_neo = min(neos.get(date), key=lambda x: getDistance(x))
+        if minDistance > float(getDistance(closest_neo)):
+            returning = closest_neo
+            minDistance = float(getDistance(returning))
+
+    return returning
+
+def areHazardous(neos):
+    returning = []
+    for date in neos:
+        returning.extend(list(filter(lambda x: x.get("is_potentially_hazardous_asteroid"), neos.get(date))))
+    return returning
+
 ## define the main function
 def main():
-    neourl = 'https://api.nasa.gov/neo/rest/v1/feed?' # API URL
+    neourl = 'https://api.nasa.gov/neo/rest/v1/feed?'  # API URL
     print("Need to get the start date to pull data from NASA")
     start = getDate()
     startdate = 'start_date=' + str(start)  ## start date for data
@@ -32,20 +56,22 @@ def main():
             end = getDate()
 
     if end == None:
-        end = start + datetime.timedelta(days = 7)
-    enddate = '&end_date=' + str(end) ## create a mechanism to utilize enddate
-    mykey = '&api_key=tIclf3RKV3YHj71xOlyp1rQr9Hl85TSpJtuoVg9c' ## replace this with our API key
+        end = start + datetime.timedelta(days=7)
+    enddate = '&end_date=' + str(end)  ## create a mechanism to utilize enddate
+    mykey = '&api_key=tIclf3RKV3YHj71xOlyp1rQr9Hl85TSpJtuoVg9c'  ## replace this with our API key
 
     neourl = neourl + startdate + mykey
 
     neojson = (requests.get(neourl)).json()
 
-    print("\n"*2)
+    print("\n" * 2)
     print("Number of NEOs being tracked during this timeframe:", neojson.get("element_count"))
+    closest_NEO = findClosestNeo(neojson.get("near_earth_objects"))
+    print("Closest NEO is:", closest_NEO)
 
-    closest_NEO = min(neojson.get("near_earth_objects"), key = x: min(x, key=lambda t: t.get("close_approach_data")[0].get("miss_distance").get("miles")))
-    print("Closest NEO is:" closest_NEO)
+    print("All the hazardous neos are:")
+    pprint(areHazardous(neojson.get("near_earth_objects")))
+
 
 ## call main
 main()
-

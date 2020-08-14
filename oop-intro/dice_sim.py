@@ -1,4 +1,7 @@
+from math import floor
+
 from cheatdice import *
+import inspect
 
 players = []
 
@@ -9,7 +12,7 @@ players.append(Levi_Cheater_2())
 
 scores = [0] * len(players)
 
-number_of_games = 100000
+number_of_games = 1000000
 game_number = 0
 print("Simulation running")
 print("==================")
@@ -21,7 +24,7 @@ while game_number < number_of_games:
         player.cheat()
     
     # find who got the max. if two were same, draw and no one wins
-    dice_max = max(players, key=lambda x : sum(x.get_dice()))
+    dice_max = max(map(lambda x: sum(x.get_dice()), players))
     winning_player = []
     for i in range(len(players)):
         if sum(players[i].get_dice()) == dice_max:
@@ -33,7 +36,7 @@ while game_number < number_of_games:
     game_number += 1
 
     percent = (float(game_number) / number_of_games) * 100
-    if round(percent) % 10 == 0:
+    if percent % 10 == 0:
         print(f"{percent}% complete ....")
 
 
@@ -42,5 +45,6 @@ print("-------------------")
 print("Final scores")
 print("------------")
 print(scores)
+print(f"The winning class is: {players[scores.index(max(scores))].__class__.__name__}")
 
 
