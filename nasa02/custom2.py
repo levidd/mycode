@@ -63,5 +63,5 @@ def main():
         wget.download(pic_url, "downloads/")
 
 
-main()
-
+if __name__ == '__main__':
+    main()
