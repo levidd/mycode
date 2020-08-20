@@ -1,0 +1,10 @@
+---
+ - hosts: planet_express
+                   
+   tasks:
+    - name: "figlet - uninstall figlet"
+      apt:
+        name: figlet
+        state: absent
+      become: True
+

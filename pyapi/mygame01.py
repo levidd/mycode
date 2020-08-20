@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
-from pyapi.Rooms import rooms
-from pyapi.GameUtils import *
+from Rooms import rooms
+from GameUtils import *
 
 
 # Replace RPG starter project with this code when new instructions are live
