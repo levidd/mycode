@@ -13,11 +13,12 @@ def test_getDistance(api_data):
     objs = api_data.get("near_earth_objects").get("2020-08-27")
     assert "28392401.166752195" == custom.getDistance(objs[0])
     assert "27598426.6606323198" == custom.getDistance(objs[1])
+    assert 0
 
 def test_findClosestNeo(api_data):
     objs = api_data.get("near_earth_objects")
     assert "http://www.neowsapp.com/rest/v1/neo/2085275?api_key=tIclf3RKV3YHj71xOlyp1rQr9Hl85TSpJtuoVg9c" == custom.findClosestNeo(objs)
-
+    assert 0
 
 def test_areHazardous(api_data):
     objs = api_data.get("near_earth_objects")
