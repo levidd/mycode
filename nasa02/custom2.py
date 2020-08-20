@@ -11,7 +11,7 @@ def getDate():
     if other_date.lower().strip() in ["yes", "y"]:
         while returning is None:
             try:
-                print("Date format in YYYY-MM-DD")
+                print("Date format in YY-MM-DD")
                 returning = datetime.datetime.strptime(input(), "%y-%m-%d")
             except ValueError:
                 print("Invalide date, try again")
@@ -63,5 +63,5 @@ def main():
         wget.download(pic_url, "downloads/")
 
 
-main()
-
+if __name__ == '__main__':
+    main()
